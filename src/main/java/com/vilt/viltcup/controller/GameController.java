@@ -17,11 +17,16 @@ public class GameController {
 
 	@Autowired
 	private GameService gameService;
-	
+
 	@RequestMapping("/gameslist.json")
 	public @ResponseBody List<Game> showGames() throws IOException {
 		System.out.println("cenas");
 		
-        return gameService.getAll();
-    }
+		return gameService.getAll();
+	}
+
+	@RequestMapping("/layout")
+	public String getCarPartialPage() {
+		return "games/layout";
+	}
 }

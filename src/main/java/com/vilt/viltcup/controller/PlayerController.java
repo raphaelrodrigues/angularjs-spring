@@ -43,5 +43,9 @@ public class PlayerController {
 			System.out.println(it.getName());
 		}
 	}
-
+	
+	 @RequestMapping("/layout")
+	    public String getCarPartialPage() {
+	        return "players/layout";
+	    }
 }

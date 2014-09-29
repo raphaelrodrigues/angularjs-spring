@@ -1,24 +1,126 @@
-<div class="input-append">
-    <input style="width:358px; margin-left: 100px;" class="span2 form-control" type="text" ng-model="carName" required="" min="1">
-    <button class="btn btn-primary" ng-disabled="!carName" ng-click="addNewCar(carName)">Add Car</button>
-</div>
+<div class="alert alert-error alert-warning" ng-show="error">{{errorMessage}}</div>
+<form class="form-horizontal">
 
-<h3 style="margin-left:100px;">Car List</h3>
-<div class="alert alert-info" style="width:400px;margin-left:100px;" ng-show="cars.length == 0">
-    No cars found
-</div>
-<table class="table table-bordered table-striped" style="width:450px; margin-left: 100px;" ng-show="cars.length &gt; 0">
-    <thead>
-        <tr>
-            <th style="text-align: center; width: 25px;">Action</th>
-            <th style="text-align: center;">Car Name</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr ng-repeat="car in cars">
-            <td style="width:70px;text-align:center;"><button class="btn btn-danger btn-xs" ng-click="removeCar(car)">Remove</button></td>
-            <td>{{car}}</td>
-        </tr>
-    </tbody>
+	<div class='contentWrapper ng-cloak'>
+
+
+		<div class="btn btn-droppable" ng-repeat="item in list5"
+			data-drop="true" ng-model='list5'
+			data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=list5])'}"
+			jqyoui-droppable="{index: {{$index}}}">
+			<div class="btn btn-info btn-draggable" data-drag="true"
+				data-jqyoui-options="{revert: 'invalid'}" ng-model="list5"
+				jqyoui-draggable="{index: {{$index}},placeholder:true,animate:true}"
+				ng-hide="!item.name">{{item.name}}</div>
+		</div>
+
+		
+
+
+	<div class="list1 thumbnail" data-drop="true" ng-model='list1'
+		data-jqyoui-options="optionsList1" jqyoui-droppable="{multiple:true}">
+		<div class="btn btn-info btn-draggable" ng-repeat="item in list1"
+			ng-show="item.name" data-drag="{{item.drag}}"
+			data-jqyoui-options="{revert: 'invalid'}" ng-model="list1"
+			jqyoui-draggable="{index: {{$index}},animate:true}">{{item.name}}</div>
+	</div>
+	
+	<div class="thumbnail list2" data-drop="true" ng-model='list2'
+		data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=list2])'}"
+		jqyoui-droppable="{multiple:true}">
+		<div class="btn btn-info btn-draggable" ng-repeat="item in list2"
+			ng-show="item.name" data-drag="{{item.drag}}"
+			data-jqyoui-options="{revert: 'invalid'}" ng-model="list2"
+			jqyoui-draggable="{index: {{$index}},animate:true}">{{item.name}}</div>
+	</div>
+	</div>
+
+
+	<div class="form-group">
+		<span class="col-md-10 control-label">Result</span>
+		<div class="col-md-10">
+			<div class="form-group row">
+				<label for="inputKey" class="col-md-2 control-label">Team 1</label>
+				<div class="col-md-4">
+					<input type="text" class="form-control" id="inputKey"
+						placeholder="result">
+				</div>
+				<label for="inputValue" class="col-md-2 control-label">Team
+					2</label>
+				<div class="col-md-4">
+					<input type="text" class="form-control" id="inputValue"
+						placeholder="result">
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+
+	<div class="form-group">
+		<label class="control-label" for="train_speed">Date of the
+			game </label>
+
+		<div class="controls">
+
+			<input class="span3 form-control" type="text" id="date"
+				ng-model="rs.date"
+				placeholder="If you leave this in blank this will get date of the past tuesday.."
+				required="" min="1" value="{{ dt.time | date }}">
+
+		</div>
+		
+	</div>
+	<div class="form-group">
+
+		<hr>
+		<div class="controls">
+			<button type="button" class="btn btn-primary"
+				ng-disabled="!rs.date" ng-hide="editMode"
+				ng-click="addNewRailwayStation(rs)">Add Game</button>
+
+			<button type="button" class="btn btn-primary"
+				ng-disabled="!rs.date" ng-show="editMode"
+				ng-click="updateRailwayStation(rs)">Save Game</button>
+			<button type="button" class="btn btn-default"
+				ng-click="resetRailwayStationForm()">Reset</button>
+		</div>
+	</div>
+</form>
+<hr>
+
+
+
+
+<h3>Games List</h3>
+<div class="alert alert-info" ng-show="games.length == 0">No
+	Players found</div>
+<table class="table table-bordered table-striped"
+	ng-show="games.length &gt; 0">
+	<thead>
+		<tr>
+			<th style="text-align: center; width: 25px;">Id</th>
+			<th style="text-align: center;">Name</th>
+			<th style="text-align: center;">Speed</th>
+			<th style="text-align: center;">Diesel</th>
+			<th style="text-align: center;">Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="item in games | orderBy:predicate">
+			<td style="text-align: center;">{{item.id}}</td>
+			<td>{{item.name}}</td>
+			<td>{{item.train.speed}}</td>
+			<td style="text-align: center; width: 20px;"><span
+				ng-show="item.train.diesel" class="icon-ok"></span></td>
+
+			<td style="width: 100px; text-align: center;">
+				<button class="btn btn-danger btn-xs"
+					ng-click="removeRailwayStation(item.id)">Remove</button>
+				<button class="btn btn-success btn-xs"
+					ng-click="editRailwayStation(item)">Edit</button>
+			</td>
+		</tr>
+	</tbody>
 </table>
-<button style="margin-left:100px;" class="btn btn-danger" ng-show="cars.length &gt; 1" ng-click="removeAllCars()">Remove All Cars</button>
+<button class="btn btn-danger" ng-show="games.length &gt; 1"
+	ng-click="removeAllRailwayStations()">Remove All games</button>

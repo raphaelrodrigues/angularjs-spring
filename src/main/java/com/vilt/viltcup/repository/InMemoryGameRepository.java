@@ -9,14 +9,35 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.vilt.viltcup.model.Game;
+import com.vilt.viltcup.model.Player;
 
 @Repository
 public class InMemoryGameRepository implements GameRepository {
 	private Map<Integer, Game> games = new HashMap<Integer, Game>();
 
 	public InMemoryGameRepository() {
-		games.put(1, new Game(1));
-		games.put(2, new Game(1));
+		InMemoryPlayerRepositoryImpl playersRepo= new InMemoryPlayerRepositoryImpl();
+		List<Player> players = playersRepo.findAll();
+		
+		Game g = new Game(1);
+		g.setResult_team1(3);
+		g.setResult_team2(1);
+		g.setTeam1(players);
+		List<Player> team1 = new ArrayList<Player>();
+		List<Player> team2 = new ArrayList<Player>();
+		int i = 0;
+		for (Player p : players) {
+			if( i >= 5 )
+				team1.add(p);
+			else
+				team2.add(p);
+			i++;
+		}
+		g.setTeam1(team1);
+		g.setTeam2(team2);
+		
+		games.put(1, g);
+		//games.put(2, g);
 	}
 
 	/* (non-Javadoc)

@@ -2,19 +2,19 @@
 
 var AngularSpringApp = {};
 
-var App = angular.module('AngularSpringApp', ["ngSanitize","ngRoute", "ngResource", 'ngDragDrop','AngularSpringApp.services','AngularSpringApp.directives']);
+var App = angular.module('AngularSpringApp', ["ngSanitize","ngRoute", "ngResource", 'ngDragDrop','AngularSpringApp.services','AngularSpringApp.filters','AngularSpringApp.directives']);
 
 // Declare app level module which depends on filters, and services
 App.config(['$routeProvider', function ($routeProvider) {
     
 
 	$routeProvider.when('/games', {
-        templateUrl: 'cars/layout',
+        templateUrl: 'games/layout',
         controller: GameController
     });
     
     $routeProvider.when('/players', {
-        templateUrl: 'railwaystations/layout',
+        templateUrl: 'players/layout',
         controller: PlayerController
     });
     

@@ -10,6 +10,7 @@ AppServices
 		    return $resource('players/playerslist.json', {}, {
 		        query: {method:'GET', isArray:true}
 		    });
+		    
 	}])
 .factory('GameFactory', ['$resource',
 		 function($resource){

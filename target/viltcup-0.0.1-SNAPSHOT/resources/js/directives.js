@@ -9,3 +9,4 @@ AppDirectives.directive('appVersion', ['version', function (version) {
         elm.text(version);
     };
 }]);
+
