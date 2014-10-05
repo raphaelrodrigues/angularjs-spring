@@ -19,13 +19,12 @@ import com.vilt.viltcup.service.GameService;
 import com.vilt.viltcup.service.PlayerService;
 
 @Controller
-@RequestMapping("/players")
 public class PlayerController {
 
 	@Autowired
 	private PlayerService playerService;
 
-	@RequestMapping("/playerslist.json")
+	@RequestMapping("/players/playerslist.json")
 	public @ResponseBody List<Player> showPlayers() throws IOException {
 		System.out.println("sdsdsd");
 		for (Player it : playerService.getAll()) {
@@ -34,7 +33,7 @@ public class PlayerController {
 		return playerService.getAll();
 	}
 
-	@RequestMapping(value = "/add/{name}", method = RequestMethod.POST)
+	@RequestMapping(value = "/players/add/{name}", method = RequestMethod.POST)
 	public @ResponseBody void addCar(@PathVariable("name") String name) {
 		System.out.println("asasdasdasdd");
 		Player p = new Player(name);
@@ -44,8 +43,13 @@ public class PlayerController {
 		}
 	}
 	
-	 @RequestMapping("/layout")
+	 @RequestMapping("/players/layout")
 	    public String getCarPartialPage() {
 	        return "players/layout";
-	    }
+	 }
+	 
+	 @RequestMapping("/players/layout_new")
+	    public String getCarPartialNewPage() {
+	        return "players/new";
+	 }
 }

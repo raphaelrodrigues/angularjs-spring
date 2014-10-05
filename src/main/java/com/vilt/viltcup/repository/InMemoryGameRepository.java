@@ -37,7 +37,7 @@ public class InMemoryGameRepository implements GameRepository {
 		g.setTeam2(team2);
 		
 		games.put(1, g);
-		//games.put(2, g);
+		games.put(2, g);
 	}
 
 	/* (non-Javadoc)

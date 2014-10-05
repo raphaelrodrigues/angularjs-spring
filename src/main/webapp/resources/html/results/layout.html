@@ -1,0 +1,99 @@
+<div class="row page-wrap">
+	<div class="col-lg-7">
+		<div class="panel panel-default">
+			<div class="panel-heading block-heading">
+				<i class="fa fa-bar-chart-o fa-fw"></i> Classifications
+
+			</div>
+			<!-- /.panel-heading -->
+			<div class="panel-body">
+				<div class="col-lg-6 col-md-6 col-sm-12 text-center">
+					<div class="dataTables_filter" id="datatable_filter">
+						<label><input type="text" aria-controls="datatable"
+							class="form-control " placeholder="Search" ng-model="query"></label>
+					</div>
+				</div>
+				<table class="table table-bordered table-striped"
+					ng-show="players.length &gt; 0">
+					<thead>
+						<tr>
+							
+							<th><a href="" ng-click="predicate = 'name'; reverse=false">Name</a>
+								(<a href="" ng-click="predicate = '-name'; reverse=false">^</a>)</th>
+
+							<th><a href=""
+								ng-click="predicate = 'points'; reverse=!reverse">Points</a></th>
+							<th><a href=""
+								ng-click="predicate = 'games.length'; reverse=!reverse">Num
+									Games</a></th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr
+							ng-repeat="item in players | filter:query | orderBy:predicate:reverse ">
+							
+							<td>{{item.name}}</td>
+							<td>{{item.points}}</td>
+							<td>{{item.games.length}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- /.panel-body -->
+		</div>
+		<!-- /.panel -->
+
+	
+	</div>
+	<!-- /.col-lg-8 -->
+	<div class="col-lg-5">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-bell fa-fw"></i> Last Games
+			</div>
+			<!-- /.panel-heading -->
+			<div class="panel-body">
+				<table class="table table-bordered table-striped"
+					ng-show="games.length &gt; 0">
+					<thead>
+						<tr>
+							
+							<th style="text-align: center;">Team 1</th>
+							<th style="text-align: center;">Team 2</th>
+							<th style="text-align: center;">Result</th>
+							<th style="text-align: center;">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in games | orderBy:predicate">
+							
+
+							<td><span ng-repeat="player in item.team1">
+									<small>{{player.name}}</small>
+							</span></td>
+
+							<td><span ng-repeat="player in item.team2">
+									<small>{{player.name}}</small>
+							</span></td>
+
+							<td>{{item.result_team1}} : {{item.result_team2}}</td>
+
+							<td style="width: 100px; text-align: center;">
+								<button class="btn btn-danger btn-xs"
+									ng-click="removeGame(item.id)">Remove</button>
+								<button class="btn btn-success btn-xs" ng-click="editGame(item)">Edit</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<!-- /.list-group -->
+			</div>
+			<!-- /.panel-body -->
+		</div>
+		<!-- /.panel -->
+
+	</div>
+	<!-- /.col-lg-4 -->
+</div>

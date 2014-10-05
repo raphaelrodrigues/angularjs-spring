@@ -12,27 +12,29 @@
 				data-jqyoui-options="{revert: 'invalid'}" ng-model="list5"
 				jqyoui-draggable="{index: {{$index}},placeholder:true,animate:true}"
 				ng-hide="!item.name">{{item.name}}</div>
-		</div><br><br>
+		</div>
+		<br> <br>
 
-		
 
 
-	<div class="list1 thumbnail" data-drop="true" ng-model='list1'
-		data-jqyoui-options="optionsList1" jqyoui-droppable="{multiple:true}">
-		<div class="btn btn-info btn-draggable" ng-repeat="item in list1"
-			ng-show="item.name" data-drag="{{item.drag}}"
-			data-jqyoui-options="{revert: 'invalid'}" ng-model="list1"
-			jqyoui-draggable="{index: {{$index}},animate:true}">{{item.name}}</div>
-	</div>
-	
-	<div class="thumbnail list2" data-drop="true" ng-model='list2'
-		data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=list2])'}"
-		jqyoui-droppable="{multiple:true}">
-		<div class="btn btn-info btn-draggable" ng-repeat="item in list2"
-			ng-show="item.name" data-drag="{{item.drag}}"
-			data-jqyoui-options="{revert: 'invalid'}" ng-model="list2"
-			jqyoui-draggable="{index: {{$index}},animate:true}">{{item.name}}</div>
-	</div>
+
+		<div class="list1 thumbnail" data-drop="true" ng-model='game.team1'
+			data-jqyoui-options="optionsList1" jqyoui-droppable="{multiple:true}">
+			<div class="btn btn-info btn-draggable"
+				ng-repeat="item in game.team1" ng-show="item.name"
+				data-drag="{{item.drag}}" data-jqyoui-options="{revert: 'invalid'}"
+				ng-model="game.team1"
+				jqyoui-draggable="{index: {{$index}},animate:true}">{{item.name}}</div>
+		</div>
+
+		<div class="thumbnail list2" data-drop="true" ng-model='game.team2'
+			data-jqyoui-options="optionsList2" jqyoui-droppable="{multiple:true}">
+			<div class="btn btn-info btn-draggable"
+				ng-repeat="item in game.team2" ng-show="item.name"
+				data-drag="{{item.drag}}" data-jqyoui-options="{revert: 'invalid'}"
+				ng-model="game.team2"
+				jqyoui-draggable="{index: {{$index}},animate:true}">{{item.name}}</div>
+		</div>
 	</div>
 
 
@@ -43,13 +45,13 @@
 				<label for="inputKey" class="col-md-2 control-label">Team 1</label>
 				<div class="col-md-4">
 					<input type="text" class="form-control" id="inputKey"
-						placeholder="result">
+						placeholder="result" ng-model="game.result_team1">
 				</div>
 				<label for="inputValue" class="col-md-2 control-label">Team
 					2</label>
 				<div class="col-md-4">
 					<input type="text" class="form-control" id="inputValue"
-						placeholder="result">
+						placeholder="result" ng-model="game.result_team2">
 				</div>
 			</div>
 		</div>
@@ -57,41 +59,36 @@
 	</div>
 
 	<div class="form-group">
-		<label class="control-label" for="train_speed">Date of the
-			game </label>
+		<label class="control-label" for="date">Date of the game </label>
 
 		<div class="controls">
 
 			<input class="span3 form-control" type="text" id="date"
-				ng-model="rs.date"
+				ng-model="game.date"
 				placeholder="If you leave this in blank this will get date of the past tuesday.."
 				required="" min="1" value="{{ dt.time | date }}">
 
 		</div>
-		
+
 	</div>
 	<div class="form-group">
 
 		<hr>
 		<div class="controls">
-			<button type="button" class="btn btn-primary"
-				ng-disabled="!rs.date" ng-hide="editMode"
-				ng-click="addNewRailwayStation(rs)">Add Game</button>
+			<button type="button" class="btn btn-primary" ng-disabled=""
+				ng-hide="editMode" ng-click="addNewGame(game)">Add Game</button>
 
 			<button type="button" class="btn btn-primary"
-				ng-disabled="!rs.date" ng-show="editMode"
-				ng-click="updateRailwayStation(rs)">Save Game</button>
+				ng-disabled="!game.date" ng-show="editMode"
+				ng-click="updateRailwayStation(game)">Save Game</button>
 			<button type="button" class="btn btn-default"
-				ng-click="resetRailwayStationForm()">Reset</button>
+				ng-click="resetGameForm()">Reset</button>
 		</div>
 	</div>
 </form>
 <hr>
 
-
-
-
-<h3 style="color:#1ABC9C;">Games List</h3>
+<h3 style="color: #1ABC9C;">Games List</h3>
 <div class="alert alert-info" ng-show="games.length == 0">No
 	Players found</div>
 <table class="table table-bordered table-striped"
@@ -108,29 +105,21 @@
 	<tbody>
 		<tr ng-repeat="item in games | orderBy:predicate">
 			<td style="text-align: center;">{{item.id}}</td>
-			
-			<td >
-			<span ng-repeat="player in item.team1">
-				<p>{{player.name}}</p>
-			</span>
-			</td>
-			
-			<td >
-			<span ng-repeat="player in item.team2">
-				<p>{{player.name}}</p>
-			</span>
-			</td>
-			
+
+			<td><span ng-repeat="player in item.team1">
+					<p>{{player.name}}</p>
+			</span></td>
+
+			<td><span ng-repeat="player in item.team2">
+					<p>{{player.name}}</p>
+			</span></td>
+
 			<td>{{item.result_team1}} : {{item.result_team2}}</td>
 
 			<td style="width: 100px; text-align: center;">
-				<button class="btn btn-danger btn-xs"
-					ng-click="removeRailwayStation(item.id)">Remove</button>
-				<button class="btn btn-success btn-xs"
-					ng-click="editRailwayStation(item)">Edit</button>
+				<button class="btn btn-danger btn-xs" ng-click="removeGame(item.id)">Remove</button>
+				<button class="btn btn-success btn-xs" ng-click="editGame(item)">Edit</button>
 			</td>
 		</tr>
 	</tbody>
 </table>
-<button class="btn btn-danger" ng-show="games.length &gt; 1"
-	ng-click="removeAllRailwayStations()">Remove All games</button>

@@ -1,5 +1,6 @@
 package com.vilt.viltcup.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,13 @@ public class PlayerServiceImpl implements PlayerService {
 	@Autowired
 	@Qualifier("a") 
 	private PlayerRepository playerRepository;
+	
+	
+	public List<Player> classification(){
+		List<Player> playerClassification = new ArrayList<Player>();
+		
+		return playerClassification;
+	}
 	
 	/* (non-Javadoc)
 	 * @see com.vilt.tvshows.service.PlayerService#getAll()

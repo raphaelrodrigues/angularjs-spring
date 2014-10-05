@@ -6,7 +6,8 @@
  * @constructor
  */
 var GameController = function($scope, $http, $timeout, PlayerFactory, GameFactory ) {
-    $scope.rs = {};
+    
+	$scope.game = {};
     $scope.editMode = false;
     
     $scope.fetchGamesList = function() {
@@ -16,8 +17,8 @@ var GameController = function($scope, $http, $timeout, PlayerFactory, GameFactor
     
     $scope.list5 =  PlayerFactory.query();
     
-    $scope.list1 = [];
-    $scope.list2 = [];
+    $scope.game.team1 = [];
+    $scope.game.team2 = [];
     
     $scope.dt = new Date();
     
@@ -25,7 +26,7 @@ var GameController = function($scope, $http, $timeout, PlayerFactory, GameFactor
     // Limit items to be dropped in list1
     $scope.optionsList1 = {
       accept: function(dragEl) {
-        if ($scope.list1.length >= 5) {
+        if ($scope.game.team1.length >= 5) {
           return false;
         } else {
           return true;
@@ -35,7 +36,7 @@ var GameController = function($scope, $http, $timeout, PlayerFactory, GameFactor
     
     $scope.optionsList2 = {
     	      accept: function(dragEl) {
-    	        if ($scope.list2.length >= 5) {
+    	        if ($scope.game.team2.length >= 5) {
     	          return false;
     	        } else {
     	          return true;
@@ -44,64 +45,38 @@ var GameController = function($scope, $http, $timeout, PlayerFactory, GameFactor
     	    };
     
     
-    $scope.addPlayer = function(rs) {
-        $scope.resetError();
+    $scope.addNewGame = function(game) {
+       
+    	
+    	$scope.resetError();
+        var game1 = {"id":1,"team1":[{"id":6,"name":"Nani","points":5,"games":[]},{"id":7,"name":"Mossoro","points":17,"games":[]},{"id":8,"name":"Toti","points":5,"games":[]},{"id":9,"name":"Neuer","points":0,"games":[]},{"id":10,"name":"Pirlo","points":3,"games":[]}],"team2":[{"id":1,"name":"Messi","points":5,"games":[]},{"id":2,"name":"Ronaldo","points":6,"games":[]},{"id":3,"name":"Diego Costa","points":14,"games":[]},{"id":4,"name":"Pepe","points":7,"games":[]},{"id":5,"name":"Figo","points":17,"games":[]}],"result_team1":3,"result_team2":1,"date_of_game":null,"created_at":null}
+    	
+    	//alert($scope.game.team1);
+    	
+    	var game_json = JSON.stringify(game);
+    	alert(game_json);
+//    	var player_json = JSON.stringify(game1.team1[0]);
+//    	alert(player_json);
+    	var res = $http.post('games/add', game_json,function(e) {
 
-        $http.post('players/add/' +  rs.name).success(function() {
-            $scope.fetchGamesList();
-            $scope.rs.name = '';
-            toastr.success("Created");
-        }).error(function(data) {
-        	
-            $scope.setError('Could not add a new player');
-            
-        });
+        }, "json");
+		res.success(function(data, status, headers, config) {
+			$scope.message = data;
+			alert(data);
+		});
+		
+		res.error(function(data, status, headers, config) {
+			alert( "failure message: " + JSON.stringify({data: data}));
+		});
+		
+		
+        
     };
     
-    $scope.updatePlayer = function(rs) {
+    
+    $scope.resetGameForm = function() {
         $scope.resetError();
-
-        $http.put('players/update', rs).success(function() {
-            $scope.fetchPlayersList();
-            $scope.rs.name = '';
-            $scope.editMode = false;
-        }).error(function() {
-            $scope.setError('Could not update the player');
-        });
-    };
-
-    $scope.editPlayer = function(rs) {
-        $scope.resetError();
-        $scope.rs = rs;
-        $scope.editMode = true;
-    };
-
-    $scope.removePlayer = function(id) {
-        $scope.resetError();
-
-        $http.delete('players/remove/' + id).success(function() {
-            $scope.fetchPlayersList();
-        }).error(function() {
-            $scope.setError('Could not remove player');
-        });
-        
-        $scope.rs = '';
-    };
-
-    $scope.removeAllPlayer = function() {
-        $scope.resetError();
-
-        $http.delete('players/removeAll').success(function() {
-            $scope.fetchPlayersList();
-        }).error(function() {
-            $scope.setError('Could not remove all Players');
-        });
-
-    };
-
-    $scope.resetPlayerForm = function() {
-        $scope.resetError();
-        $scope.rs = {};
+        $scope.game = {};
         $scope.editMode = false;
     };
 
@@ -120,6 +95,7 @@ var GameController = function($scope, $http, $timeout, PlayerFactory, GameFactor
     
     $scope.predicate = 'id';
     
+    //DRAG AND DROP
     $scope.dropListener = function (eDraggable, eDroppable) {
     	 
         var isDropForbidden = function (aTarget, item) {

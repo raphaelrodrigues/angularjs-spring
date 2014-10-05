@@ -6,9 +6,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/")
 public class IndexController {
-
+	
     @RequestMapping
     public String getIndexPage() {
         return "index";
     }
+    
+    @RequestMapping("/game")
+	public String getCarPartialPage() {
+		return "game";
+	}
+    
+    
+    
+    
 }

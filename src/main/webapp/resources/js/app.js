@@ -18,9 +18,19 @@ App.config(['$routeProvider', function ($routeProvider) {
         controller: PlayerController
     });
     
+    $routeProvider.when('/players/new', {
+        templateUrl: 'players/layout_new',
+        controller: PlayerController
+    });
+    
     $routeProvider.when('/railwaystations', {
         templateUrl: 'railwaystations/layout',
         controller: RailwayStationController
+    });
+    
+    $routeProvider.when('/results', {
+        templateUrl: 'results/layout',
+        controller: ResultController
     });
     
     $routeProvider.otherwise({redirectTo: '/games'});

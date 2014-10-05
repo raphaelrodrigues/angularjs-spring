@@ -3,6 +3,8 @@ package com.vilt.viltcup.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.vilt.viltcup.utils.RandomUtil;
+
 public class Player {
 	
 	private int id;
@@ -12,10 +14,14 @@ public class Player {
 	private List<Game> games;
 	
 	
+	public Player() {
+		
+	}
+
 	public Player(int id, String name){
 		this.id = id;
 		this.name = name;
-		points = 0;
+		points = RandomUtil.randomNumber(0, 20);
 		games = new ArrayList<Game>();
 	}
 	

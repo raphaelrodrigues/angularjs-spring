@@ -1,8 +1,13 @@
 package com.vilt.viltcup.model;
 
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 
 public class Game {
 	private int id;
@@ -13,7 +18,23 @@ public class Game {
 	private Date date_of_game;
 	private Date created_at;
 	
+	public Game(){
+		
+	}
 	
+	public Game(int id, List<Player> team1, List<Player> team2,
+			int result_team1, int result_team2, Date date_of_game,
+			Date created_at) {
+		
+		this.id = 43;
+		this.team1 = team1;
+		this.team2 = team2;
+		this.result_team1 = result_team1;
+		this.result_team2 = result_team2;
+		this.date_of_game = date_of_game;
+		this.created_at = created_at;
+	}
+
 	public Game(int id) {
 		super();
 		this.id = id;
@@ -68,5 +89,7 @@ public class Game {
 	public void setCreated_at(Date created_at) {
 		this.created_at = created_at;
 	}
+	
+	
 	
 }
